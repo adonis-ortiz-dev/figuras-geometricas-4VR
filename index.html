@@ -7,7 +7,7 @@
   <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
   <style>
     * { box-sizing: border-box; }
-
+ 
     body {
       margin: 0;
       overflow: hidden;
@@ -15,16 +15,16 @@
       background: #030712;
       color: #eef7ff;
     }
-
+ 
     a-scene { position: fixed; inset: 0; }
-
+ 
     #app {
       position: fixed;
       inset: 0;
       z-index: 5;
       pointer-events: none;
     }
-
+ 
     .panel {
       pointer-events: auto;
       position: absolute;
@@ -39,12 +39,12 @@
       background: rgba(4, 15, 35, .94);
       box-shadow: 0 0 30px #00c8ff22, 0 18px 45px #0009;
     }
-
+ 
     h1 { font-size: 1.35rem; margin: 7px 0; }
     h2 { font-size: 1rem; margin: 10px 0; }
     p { color: #c6d9ea; line-height: 1.45; }
     .small { font-size: .82rem; color: #9cb7cf; }
-
+ 
     .eyebrow {
       color: #55e6ff;
       text-transform: uppercase;
@@ -52,14 +52,14 @@
       font-size: .7rem;
       font-weight: bold;
     }
-
+ 
     .buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin: 12px 0;
     }
-
+ 
     button {
       padding: 10px;
       border: 1px solid #56dfff77;
@@ -69,14 +69,14 @@
       font-weight: bold;
       cursor: pointer;
     }
-
+ 
     button:hover { filter: brightness(1.2); }
     button.secondary { background: #12243a; }
     button.active { background: #087f8c; border-color: #67ffe0; }
     .hidden { display: none !important; }
-
+ 
     .field { display: grid; gap: 5px; margin: 10px 0; }
-
+ 
     input, select {
       width: 100%;
       padding: 10px;
@@ -85,7 +85,7 @@
       background: #071426;
       color: white;
     }
-
+ 
     .result {
       margin-top: 10px;
       padding: 11px;
@@ -94,7 +94,7 @@
       border-radius: 10px;
       line-height: 1.5;
     }
-
+ 
     #status {
       position: absolute;
       bottom: 12px;
@@ -108,9 +108,9 @@
       font-size: .8rem;
       text-align: center;
     }
-
+ 
     .team { font-size: .88rem; line-height: 1.7; }
-
+ 
     @media (max-width: 700px) {
       .panel {
         top: 8px;
@@ -122,16 +122,16 @@
     }
   </style>
 </head>
-
+ 
 <body>
-
+ 
 <a-scene id="scene"
   background="color: #030712"
   fog="type: linear; color: #071426; near: 12; far: 32"
   renderer="colorManagement: true; antialias: true"
   vr-mode-ui="enabled: true"
-  webxr="optionalFeatures: local-floor, bounded-floor">
-
+  webxr="optionalFeatures: local-floor, bounded-floor, hand-tracking">
+ 
   <!-- ILUMINACIÓN FUTURISTA -->
   <a-entity light="type: ambient; color: #9ac9ff; intensity: 0.8"></a-entity>
   <a-entity light="type: directional; color: #c4f5ff; intensity: 1.2"
@@ -142,53 +142,53 @@
     position="-6 3 0"></a-entity>
   <a-entity light="type: point; color: #00ffca; intensity: .7; distance: 16"
     position="6 3 -2"></a-entity>
-
+ 
   <!-- SALÓN: SUELO, TECHO Y PAREDES -->
   <a-box position="0 -.16 -2"
     width="16" height=".3" depth="12"
     material="color: #071426; metalness: .5; roughness: .35"></a-box>
-
+ 
   <!-- Techo alto: 6.5 metros -->
   <a-box position="0 6.55 -2"
     width="16" height=".18" depth="12"
     material="color: #091529; metalness: .5; roughness: .4"></a-box>
-
+ 
   <a-box position="0 3.25 -8"
     width="16" height="6.5" depth=".25"
     color="#0b1b31"
     material="metalness: .5; roughness: .4"></a-box>
-
+ 
   <a-box position="0 3.25 4"
     width="16" height="6.5" depth=".25"
     color="#0b1b31"
     material="metalness: .5; roughness: .4"></a-box>
-
+ 
   <a-box position="-8 3.25 -2"
     width=".25" height="6.5" depth="12"
     color="#0b1b31"></a-box>
-
+ 
   <a-box position="8 3.25 -2"
     width=".25" height="6.5" depth="12"
     color="#0b1b31"></a-box>
-
+ 
   <a-entity id="floorGrid"></a-entity>
   <a-entity id="wallAccents"></a-entity>
   <a-entity id="ceilingLights"></a-entity>
   <a-entity id="roomDetails"></a-entity>
-
-  <!-- CARTEL PRINCIPAL: SOLO FONDO Y TEXTO -->
+ 
+  <!-- CARTEL PRINCIPAL: SOLO TEXTO Y LUCES, SIN FIGURAS -->
   <a-box position="0 4.42 -7.79"
     width="12.55" height="3.28" depth=".18"
     color="#020b20"
     material="metalness: .7; roughness: .2;
     emissive: #061b48; emissiveIntensity: .4"></a-box>
-
+ 
   <a-box position="0 4.42 -7.675"
     width="12.24" height="3.02" depth=".035"
     color="#06183a"
     material="emissive: #071d49; emissiveIntensity: .3"></a-box>
-
-  <!-- TEXTO DEL CARTEL (con resplandor, sin acentos) -->
+ 
+  <!-- TEXTO DEL CARTEL (con resplandor) -->
   <a-text value="FERIA DE LOGROS"
     position="0 5.52 -7.62" align="center" color="#20eaff" opacity=".35"
     width="10.4" scale="1.44 1.44 1.44" font="mozillavr"
@@ -197,7 +197,7 @@
     position="0 5.52 -7.61" align="center" color="#ffffff"
     width="10.4" scale="1.38 1.38 1.38" font="mozillavr"
     material="shader: flat; emissive: #ffffff"></a-text>
-
+ 
   <a-text value="MATEMATICA 2026"
     position="0 4.92 -7.62" align="center" color="#12dfff" opacity=".35"
     width="10.8" scale="1.34 1.34 1.34" font="mozillavr"
@@ -206,7 +206,7 @@
     position="0 4.92 -7.61" align="center" color="#12dfff"
     width="10.8" scale="1.28 1.28 1.28" font="mozillavr"
     material="shader: flat; emissive: #12dfff"></a-text>
-
+ 
   <a-text value="FIGURAS GEOMETRICAS"
     position="0 4.2 -7.62" align="center" color="#8b5cf6" opacity=".4"
     width="9.8" scale="1.24 1.24 1.24" font="mozillavr"></a-text>
@@ -214,83 +214,83 @@
     position="0 4.2 -7.61" align="center" color="#d8c8ff"
     width="9.8" scale="1.18 1.18 1.18" font="mozillavr"
     material="shader: flat; emissive: #d8c8ff"></a-text>
-
+ 
   <a-text value="Este espacio fue creado por alumnos"
     position="0 3.62 -7.61" align="center" color="#e5f4ff"
     width="10.8" scale=".88 .88 .88"></a-text>
   <a-text value="de segundo curso de desarrollo de software."
     position="0 3.28 -7.61" align="center" color="#9fe9ff"
     width="10.2" scale=".88 .88 .88"></a-text>
-
+ 
   <!-- PLATAFORMA CENTRAL -->
   <a-cylinder position="0 .18 -3"
     radius="1.03" height=".36"
     color="#09243a"
     material="metalness: .7; roughness: .22"></a-cylinder>
-
+ 
   <a-cylinder position="0 .38 -3"
     radius="1.02" height=".035"
     color="#14cfff"
     material="emissive: #14cfff; emissiveIntensity: 1.3"></a-cylinder>
-
+ 
   <a-cylinder position="0 .44 -3"
     radius=".94" height=".12"
     color="#12314a"></a-cylinder>
-
+ 
   <a-torus position="0 .52 -3"
     rotation="90 0 0"
     radius=".77" radius-tubular=".018"
     color="#5cecff"
     material="emissive: #5cecff; emissiveIntensity: 1.2"></a-torus>
-
+ 
   <!-- COLUMNAS LATERALES -->
   <a-box position="-6.9 1.7 -2"
     width=".55" height="3.1" depth="1.15"
     color="#0c2038"></a-box>
-
+ 
   <a-box position="-6.9 1.7 -2"
     width=".59" height=".045" depth="1.2"
     color="#8b5cf6"
     material="emissive: #8b5cf6; emissiveIntensity: 1"></a-box>
-
+ 
   <a-box position="6.9 1.7 -2"
     width=".55" height="3.1" depth="1.15"
     color="#0c2038"></a-box>
-
+ 
   <a-box position="6.9 1.7 -2"
     width=".59" height=".045" depth="1.2"
     color="#00ffd0"
     material="emissive: #00ffd0; emissiveIntensity: 1"></a-box>
-
+ 
   <!-- FIGURAS 3D: SE MUESTRA UNA A LA VEZ -->
   <a-entity id="figure" position="0 1.65 -3">
-
+ 
     <a-box id="cube" class="figure-hit"
       width="1.25" height="1.25" depth="1.25"
       color="#32c8ff"
       material="metalness: .28; roughness: .2;
       emissive: #087ba8; emissiveIntensity: .25"></a-box>
-
+ 
     <a-sphere id="sphere" class="figure-hit"
       radius=".76" color="#ffb547"
       material="metalness: .28; roughness: .18;
       emissive: #9a4d00; emissiveIntensity: .2"
       visible="false"></a-sphere>
-
+ 
     <a-cylinder id="cylinder" class="figure-hit"
       radius=".62" height="1.42"
       color="#51f0c0"
       material="metalness: .24; roughness: .2;
       emissive: #067d65; emissiveIntensity: .2"
       visible="false"></a-cylinder>
-
+ 
     <a-cone id="cone" class="figure-hit"
       radius-bottom=".78" radius-top="0" height="1.48"
       color="#f08cff"
       material="metalness: .22; roughness: .22;
       emissive: #8f249f; emissiveIntensity: .2"
       visible="false"></a-cone>
-
+ 
     <a-entity id="pyramid" visible="false">
       <a-cone class="figure-hit"
         radius-bottom=".82" radius-top="0" height="1.48"
@@ -299,49 +299,47 @@
         material="metalness: .22; roughness: .22;
         emissive: #991b43; emissiveIntensity: .2"></a-cone>
     </a-entity>
-
+ 
   </a-entity>
-
-  <!-- CÁMARA Y MANDOS VR -->
+ 
+  <!-- CÁMARA, MANDOS Y MANOS VR (todo dentro del rig para que se muevan juntos) -->
   <a-entity id="cameraRig" position="0 0 1.25">
     <a-camera id="playerCamera"
       position="0 1.6 0"
       wasd-controls-enabled="false"
       look-controls="pointerLockEnabled: false">
       <a-entity cursor="rayOrigin: mouse; fuse: false"
-        raycaster="objects: .figure-hit; far: 12"
+        raycaster="objects: .figure-hit, .vr-button-hit; far: 12"
         material="color: #d9fbff; shader: flat"></a-entity>
     </a-camera>
+ 
+    <!-- PANELES VR AL ALCANCE (solo visibles dentro de las gafas) -->
+    <a-entity id="vrPanels" visible="false">
+      <a-entity id="panelFigures" position="-.8 1.15 -.7" rotation="-20 22 0"></a-entity>
+      <a-entity id="panelActions" position=".8 1.15 -.7" rotation="-20 -22 0"></a-entity>
+    </a-entity>
   </a-entity>
-
-  <a-entity id="leftController"
-    laser-controls="hand: left"
-    raycaster="objects: .figure-hit; far: 12; lineColor: #5cecff; lineOpacity: .9"></a-entity>
-
-  <a-entity id="rightController"
-    laser-controls="hand: right"
-    raycaster="objects: .figure-hit; far: 12; lineColor: #a78bfa; lineOpacity: .9"></a-entity>
-
+ 
 </a-scene>
-
+ 
 <!-- PANEL DE CONTROL -->
 <div id="app">
   <aside class="panel">
-
+ 
     <div class="eyebrow">Experiencia de realidad virtual</div>
     <h1>GeoLab XR</h1>
     <p class="small">Laboratorio futurista para aprender geometría en 3D.</p>
-
+ 
     <div class="buttons">
       <button onclick="showSection('start')">Figuras</button>
       <button onclick="showSection('calc')">Calculadora</button>
       <button class="secondary" onclick="showSection('info')">Proyecto</button>
       <button class="secondary" onclick="enterVR()">Entrar a VR</button>
     </div>
-
+ 
     <section id="start">
       <h2>Elegí una figura</h2>
-
+ 
       <div class="buttons">
         <button data-shape="cube" onclick="selectFigure('cube')">Cubo</button>
         <button data-shape="sphere" onclick="selectFigure('sphere')">Esfera</button>
@@ -349,11 +347,11 @@
         <button data-shape="cone" onclick="selectFigure('cone')">Cono</button>
         <button data-shape="pyramid" onclick="selectFigure('pyramid')">Pirámide</button>
       </div>
-
+ 
       <h2 id="figureName">Cubo</h2>
       <p id="figureDescription">Sólido con seis caras cuadradas iguales.</p>
       <p id="figureCharacteristics">Caras: 6 · Aristas: 12 · Vértices: 8<br>Área total: A = 6a²</p>
-
+ 
       <div class="buttons">
         <button class="secondary" onclick="moveFigure(-.2,0,0)">Mover ←</button>
         <button class="secondary" onclick="moveFigure(.2,0,0)">Mover →</button>
@@ -364,14 +362,14 @@
         <button class="secondary" onclick="resetFigure()">Centrar figura</button>
         <button class="secondary" onclick="resetPlayer()">Reubicar usuario</button>
       </div>
-
-      <p class="small">Meta Quest: apunta con el mando y presiona el gatillo para agarrar una figura. Usa el joystick izquierdo para caminar y el derecho para girar.</p>
+ 
+      <p class="small">Meta Quest (mandos o manos): apunta con el rayo y presiona el gatillo (o pellizca con la mano) para agarrar la figura o pulsar los botones. Para moverte: joystick izquierdo camina y derecho gira, o apunta al piso y presiona/pellizca para teletransportarte. Grip: cambia de figura. Joystick derecho adelante/atras: acerca o aleja la figura agarrada.</p>
       <p class="small">Computadora: usa WASD para caminar y Q/E para girar.</p>
     </section>
-
+ 
     <section id="calc" class="hidden">
       <h2>Calculadora de área total</h2>
-
+ 
       <div class="field">
         <label for="calcFigure">Figura</label>
         <select id="calcFigure" onchange="renderCalcFields()">
@@ -382,13 +380,13 @@
           <option value="pyramid">Pirámide de base cuadrada</option>
         </select>
       </div>
-
+ 
       <div id="calcFields"></div>
       <button onclick="calculateArea()">Calcular área</button>
       <div id="calcResult" class="result hidden"></div>
       <p><button class="secondary" onclick="showSection('start')">Volver a figuras</button></p>
     </section>
-
+ 
     <section id="info" class="hidden">
       <h2>Sobre GeoLab XR</h2>
       <p>Aplicación educativa de geometría en tres dimensiones, creada para la Feria de Logros Matemática 2026.</p>
@@ -405,17 +403,17 @@
       <button class="secondary" onclick="showSection('start')">Volver</button>
     </section>
   </aside>
-
+ 
   <div id="status">Selecciona una figura para comenzar.</div>
 </div>
-
+ 
 <script>
   const scene = document.getElementById('scene');
   const figureRoot = document.getElementById('figure');
   const rig = document.getElementById('cameraRig');
   const camera = document.getElementById('playerCamera');
   const statusEl = document.getElementById('status');
-
+ 
   // GENERAR DETALLES FUTURISTAS
   function makeBox(parent, position, size, color, material = '') {
     const el = document.createElement('a-box');
@@ -428,58 +426,58 @@
     parent.appendChild(el);
     return el;
   }
-
+ 
   const floorGrid = document.getElementById('floorGrid');
   const wallAccents = document.getElementById('wallAccents');
   const ceilingLights = document.getElementById('ceilingLights');
   const roomDetails = document.getElementById('roomDetails');
-
+ 
   for (let x = -7.5; x <= 7.5; x += .75) {
     makeBox(floorGrid, `${x} .008 -2`,
       [.012, .012, 11.8], '#0b4260',
       'emissive: #0b4260; emissiveIntensity: .5');
   }
-
+ 
   for (let z = -7.5; z <= 3.5; z += .75) {
     makeBox(floorGrid, `0 .009 ${z}`,
       [15.8, .012, .012], '#0b4260',
       'emissive: #0b4260; emissiveIntensity: .5');
   }
-
+ 
   for (const y of [.18, 6.25]) {
     makeBox(wallAccents, `0 ${y} -7.82`,
       [15.6, .035, .035], '#0bdcff',
       'emissive: #0bdcff; emissiveIntensity: 1');
-
+ 
     makeBox(wallAccents, `0 ${y} 3.82`,
       [15.6, .035, .035], '#8b5cf6',
       'emissive: #8b5cf6; emissiveIntensity: 1');
-
+ 
     makeBox(wallAccents, `-7.82 ${y} -2`,
       [.035, .035, 11.6], '#0bdcff',
       'emissive: #0bdcff; emissiveIntensity: 1');
-
+ 
     makeBox(wallAccents, `7.82 ${y} -2`,
       [.035, .035, 11.6], '#00ffc8',
       'emissive: #00ffc8; emissiveIntensity: 1');
   }
-
+ 
   for (const x of [-5.7, -2.9, 0, 2.9, 5.7]) {
     makeBox(ceilingLights, `${x} 6.25 -2`,
       [1.6, .045, .32], '#d5fbff',
       'emissive: #8deeff; emissiveIntensity: 1');
   }
-
+ 
   for (const z of [-5.2, -3.8, -2.4, -1, .4, 1.8]) {
     makeBox(roomDetails, `-7.78 2.5 ${z}`,
       [.06, 1.25, .055], '#7c3aed',
       'emissive: #7c3aed; emissiveIntensity: .8');
-
+ 
     makeBox(roomDetails, `7.78 2.5 ${z}`,
       [.06, 1.25, .055], '#00d9ff',
       'emissive: #00d9ff; emissiveIntensity: .8');
   }
-
+ 
   // DATOS EDUCATIVOS
   const figureData = {
     cube: {
@@ -508,55 +506,55 @@
       chars: '5 caras · 8 aristas · 5 vértices<br>Área: A = a² + 2ag'
     }
   };
-
+ 
   let currentFigure = 'cube';
   let figureScale = 1;
   const figureHome = { x: 0, y: 1.65, z: -3 };
-
+ 
   function showSection(id) {
     ['start', 'calc', 'info'].forEach(section => {
       document.getElementById(section).classList.toggle('hidden', section !== id);
     });
-
+ 
     if (id === 'calc') {
       document.getElementById('calcFigure').value = currentFigure;
       renderCalcFields();
     }
   }
-
+ 
   function selectFigure(id) {
     if (!figureData[id]) return;
-
+ 
     currentFigure = id;
-
+ 
     ['cube', 'sphere', 'cylinder', 'cone', 'pyramid'].forEach(key => {
       document.getElementById(key).setAttribute('visible', key === id);
     });
-
+ 
     document.getElementById('figureName').textContent = figureData[id].name;
     document.getElementById('figureDescription').textContent = figureData[id].desc;
     document.getElementById('figureCharacteristics').innerHTML = figureData[id].chars;
-
+ 
     document.querySelectorAll('[data-shape]').forEach(button => {
       button.classList.toggle('active', button.dataset.shape === id);
     });
-
+ 
     figureScale = 1;
     figureRoot.setAttribute('scale', '1 1 1');
-
+ 
     statusEl.textContent = `${figureData[id].name} seleccionada.`;
   }
-
+ 
   function moveFigure(dx, dy, dz) {
     const p = figureRoot.getAttribute('position');
-
+ 
     figureRoot.setAttribute('position', {
       x: Math.max(-5.8, Math.min(5.8, p.x + dx)),
       y: Math.max(.8, Math.min(3.8, p.y + dy)),
       z: Math.max(-6.5, Math.min(2.5, p.z + dz))
     });
   }
-
+ 
   function rotateFigure(degrees) {
     const r = figureRoot.getAttribute('rotation');
     figureRoot.setAttribute('rotation', {
@@ -565,13 +563,13 @@
       z: r.z
     });
   }
-
+ 
   function scaleFigure(factor) {
     figureScale = Math.max(.45, Math.min(1.8, figureScale * factor));
     figureRoot.setAttribute('scale',
       `${figureScale} ${figureScale} ${figureScale}`);
   }
-
+ 
   function resetFigure() {
     figureRoot.setAttribute('position', figureHome);
     figureRoot.setAttribute('rotation', '0 0 0');
@@ -579,14 +577,14 @@
     figureRoot.setAttribute('scale', '1 1 1');
     statusEl.textContent = 'Figura centrada en la plataforma.';
   }
-
+ 
   function resetPlayer() {
     rig.setAttribute('position', '0 0 1.25');
     rig.setAttribute('rotation', '0 0 0');
     camera.setAttribute('rotation', '0 0 0');
     statusEl.textContent = 'Posición del usuario restablecida.';
   }
-
+ 
   function enterVR() {
     if (scene.enterVR) {
       scene.enterVR();
@@ -594,19 +592,19 @@
       statusEl.textContent = 'Usa un navegador compatible con WebXR y HTTPS.';
     }
   }
-
+ 
   // CALCULADORA DE ÁREAS
   function renderCalcFields() {
     const kind = document.getElementById('calcFigure').value;
-
+ 
     const field = (id, label) =>
       `<div class="field">
         <label for="${id}">${label}</label>
         <input id="${id}" type="number" min="0.01" step="any" placeholder="Ej. 3">
       </div>`;
-
+ 
     let html = '';
-
+ 
     if (kind === 'cube') html = field('side', 'Lado (a)');
     if (kind === 'sphere') html = field('radius', 'Radio (r)');
     if (kind === 'cylinder') {
@@ -619,24 +617,24 @@
       html = field('side', 'Lado de la base (a)') +
              field('apothem', 'Apotema lateral (g)');
     }
-
+ 
     document.getElementById('calcFields').innerHTML = html;
     document.getElementById('calcResult').classList.add('hidden');
   }
-
+ 
   function getValue(id) {
     const input = document.getElementById(id);
     if (!input || input.value.trim() === '') return NaN;
-
+ 
     const value = Number(input.value);
     return value > 0 ? value : NaN;
   }
-
+ 
   function calculateArea() {
     const kind = document.getElementById('calcFigure').value;
     let area = NaN;
     let formula = '';
-
+ 
     if (kind === 'cube') {
       const a = getValue('side');
       area = 6 * a * a;
@@ -662,10 +660,10 @@
       area = a * a + 2 * a * g;
       formula = 'A = a² + 2ag';
     }
-
+ 
     const result = document.getElementById('calcResult');
     result.classList.remove('hidden');
-
+ 
     if (!Number.isFinite(area)) {
       result.textContent = 'Escribe valores positivos en todos los campos.';
     } else {
@@ -673,7 +671,7 @@
         `<strong>Área total:</strong> ${area.toFixed(2)} unidades²<br>${formula}`;
     }
   }
-
+ 
   // COLISIONES DEL USUARIO CON LAS PAREDES Y LA PLATAFORMA
   const ROOM = {
     minX: -7.35,
@@ -682,34 +680,34 @@
     maxZ: 3.35,
     radius: .28
   };
-
+ 
   const solidBoxes = [
     { x: 0, z: -3, hx: 1.03, hz: 1.03 }
   ];
-
+ 
   function blockedAt(x, z) {
     if (x < ROOM.minX || x > ROOM.maxX ||
         z < ROOM.minZ || z > ROOM.maxZ) {
       return true;
     }
-
+ 
     return solidBoxes.some(box =>
       Math.abs(x - box.x) < box.hx + ROOM.radius &&
       Math.abs(z - box.z) < box.hz + ROOM.radius
     );
   }
-
+ 
   function movePlayer(dx, dz) {
     const p = rig.getAttribute('position');
     const nx = p.x + dx;
-
+ 
     if (!blockedAt(nx, p.z)) {
       rig.setAttribute('position', { x: nx, y: p.y, z: p.z });
     }
-
+ 
     const afterX = rig.getAttribute('position');
     const nz = afterX.z + dz;
-
+ 
     if (!blockedAt(afterX.x, nz)) {
       rig.setAttribute('position', {
         x: afterX.x,
@@ -718,213 +716,467 @@
       });
     }
   }
-
-  // CONTROLES DE LOS MANDOS META QUEST
-  const moveStick = { x: 0, y: 0 };
-  const turnStick = { x: 0, y: 0 };
-
-  const controllers = [
-    document.getElementById('leftController'),
-    document.getElementById('rightController')
-  ];
-
-  let grabbedBy = null;
-  let grabDistance = 2.1;
-
-  const origin = new THREE.Vector3();
-  const direction = new THREE.Vector3();
+ 
+  // CONTROLES VR: MANDOS Y MANOS (WebXR directo, funciona dentro del modo inmersivo)
+  const vrPanels = document.getElementById('vrPanels');
+ 
   const forward = new THREE.Vector3();
   const right = new THREE.Vector3();
-
+  const xrO = new THREE.Vector3();
+  const xrD = new THREE.Vector3();
+  const xrQ = new THREE.Quaternion();
+  const xrRay = new THREE.Raycaster();
+ 
+  let heldBy = null;
+  let grabDistance = 2.1;
+  const xrControllers = [];
+ 
   function findAncestor(entity, className) {
     let node = entity;
-
     while (node) {
-      if (node.classList && node.classList.contains(className)) {
-        return node;
-      }
+      if (node.classList && node.classList.contains(className)) return node;
       node = node.parentEl;
     }
-
     return null;
   }
-
-  function getHits(controller) {
-    const ray = controller.components && controller.components.raycaster;
-    return ray && ray.intersections ? ray.intersections : [];
+ 
+  function isVisible(obj) {
+    while (obj) {
+      if (obj.visible === false) return false;
+      obj = obj.parent;
+    }
+    return true;
   }
-
-  function moveHeldFigure(controller) {
-    const ray = controller.components && controller.components.raycaster;
-
-    if (!ray || !ray.raycaster) return;
-
-    origin.copy(ray.raycaster.ray.origin);
-    direction.copy(ray.raycaster.ray.direction);
-
-    const pos = origin.clone().addScaledVector(direction, grabDistance);
-
+ 
+  function placeFigure(v) {
     figureRoot.setAttribute('position', {
-      x: THREE.MathUtils.clamp(pos.x, -6.4, 6.4),
-      y: THREE.MathUtils.clamp(pos.y, .9, 3.9),
-      z: THREE.MathUtils.clamp(pos.z, -6.7, 2.6)
+      x: THREE.MathUtils.clamp(v.x, -6.4, 6.4),
+      y: THREE.MathUtils.clamp(v.y, .9, 3.9),
+      z: THREE.MathUtils.clamp(v.z, -6.7, 2.6)
     });
   }
-
-  function setupController(controller, hand) {
-    controller.addEventListener('thumbstickmoved', event => {
-      const stick = hand === 'left' ? moveStick : turnStick;
-      stick.x = event.detail.x || 0;
-      stick.y = event.detail.y || 0;
+ 
+  function cycleFigure(dir) {
+    const ids = Object.keys(figureData);
+    const i = ids.indexOf(currentFigure);
+    selectFigure(ids[(i + dir + ids.length) % ids.length]);
+  }
+ 
+  // ACCIONES DE LOS BOTONES 3D
+  function runAction(action) {
+    if (figureData[action]) selectFigure(action);
+    else if (action === 'rotL') rotateFigure(-15);
+    else if (action === 'rotR') rotateFigure(15);
+    else if (action === 'smaller') scaleFigure(.9);
+    else if (action === 'bigger') scaleFigure(1.1);
+    else if (action === 'center') resetFigure();
+  }
+ 
+  function pressButton(btn) {
+    runAction(btn.dataset.action);
+    btn.setAttribute('scale', '1.1 1.1 1.1');
+    setTimeout(() => btn.setAttribute('scale', '1 1 1'), 140);
+  }
+ 
+  // PANELES 3D (figuras y acciones)
+  function buildPanel(parentId, title, titleColor, items) {
+    const parent = document.getElementById(parentId);
+ 
+    const back = document.createElement('a-plane');
+    back.setAttribute('width', '.64');
+    back.setAttribute('height', '1.16');
+    back.setAttribute('position', '0 .04 -.012');
+    back.setAttribute('material', 'color: #04122a; opacity: .88; transparent: true; shader: flat');
+    parent.appendChild(back);
+ 
+    const t = document.createElement('a-text');
+    t.setAttribute('value', title);
+    t.setAttribute('align', 'center');
+    t.setAttribute('color', titleColor);
+    t.setAttribute('width', '1.6');
+    t.setAttribute('position', '0 .5 .005');
+    parent.appendChild(t);
+ 
+    items.forEach(([action, label, color], i) => {
+      const btn = document.createElement('a-entity');
+      btn.classList.add('vr-button');
+      btn.dataset.action = action;
+      btn.setAttribute('position', `0 ${(.3 - i * .17).toFixed(3)} 0`);
+ 
+      const face = document.createElement('a-plane');
+      face.classList.add('vr-button-hit');
+      face.setAttribute('width', '.56');
+      face.setAttribute('height', '.14');
+      face.setAttribute('material',
+        `color: #0b2942; emissive: ${color}; emissiveIntensity: .45`);
+      btn.appendChild(face);
+ 
+      const txt = document.createElement('a-text');
+      txt.setAttribute('value', label);
+      txt.setAttribute('align', 'center');
+      txt.setAttribute('color', '#effbff');
+      txt.setAttribute('width', '1.5');
+      txt.setAttribute('position', '0 0 .01');
+      btn.appendChild(txt);
+ 
+      parent.appendChild(btn);
     });
-
-    controller.addEventListener('thumbstickup', () => {
-      const stick = hand === 'left' ? moveStick : turnStick;
-      stick.x = 0;
-      stick.y = 0;
+  }
+ 
+  buildPanel('panelFigures', 'FIGURAS', '#5cecff', [
+    ['cube', 'CUBO', '#16bff4'],
+    ['sphere', 'ESFERA', '#ffb547'],
+    ['cylinder', 'CILINDRO', '#51f0c0'],
+    ['cone', 'CONO', '#e879f9'],
+    ['pyramid', 'PIRAMIDE', '#fb7185']
+  ]);
+ 
+  buildPanel('panelActions', 'ACCIONES', '#c4b5fd', [
+    ['rotL', 'GIRAR <', '#38bdf8'],
+    ['rotR', 'GIRAR >', '#38bdf8'],
+    ['smaller', 'REDUCIR', '#fbbf24'],
+    ['bigger', 'AUMENTAR', '#fbbf24'],
+    ['center', 'CENTRAR', '#a78bfa']
+  ]);
+ 
+  // RAYO DE UN MANDO O MANO (en coordenadas del mundo)
+  function rayOf(st) {
+    st.c.getWorldPosition(xrO);
+    st.c.getWorldQuaternion(xrQ);
+    xrD.set(0, 0, -1).applyQuaternion(xrQ);
+  }
+ 
+  function xrTargets() {
+    const list = [];
+    figureRoot.object3D.traverse(o => {
+      if (o.isMesh && isVisible(o)) list.push(o);
     });
-
-    controller.addEventListener('triggerdown', () => {
-      for (const hit of getHits(controller)) {
-        const entity = hit.object && hit.object.el;
-        const figureHit = findAncestor(entity, 'figure-hit');
-
-        if (figureHit) {
-          grabbedBy = controller;
-          grabDistance = THREE.MathUtils.clamp(hit.distance || 2.1, 1, 4.5);
-          moveHeldFigure(controller);
-          statusEl.textContent = 'Figura agarrada. Suelta el gatillo para dejarla.';
-          return;
+    document.querySelectorAll('.vr-button-hit').forEach(el => {
+      const m = el.getObject3D('mesh');
+      if (m && isVisible(m)) list.push(m);
+    });
+    return list;
+  }
+ 
+  // Que apunta el rayo: boton, figura o piso
+  function pickFor(st) {
+    rayOf(st);
+    xrRay.set(xrO, xrD);
+    xrRay.far = 15;
+ 
+    let best = null;
+    const hits = xrRay.intersectObjects(xrTargets(), false);
+ 
+    if (hits.length) {
+      const el = hits[0].object.el;
+      const btn = findAncestor(el, 'vr-button');
+      best = btn
+        ? { type: 'button', btn, distance: hits[0].distance }
+        : { type: 'figure', distance: hits[0].distance };
+    }
+ 
+    if (xrD.y < -.02) {
+      const t = -xrO.y / xrD.y;
+      if (t > 0 && t < 12 && (!best || t < best.distance)) {
+        const p = xrO.clone().addScaledVector(xrD, t);
+        if (Math.abs(p.x) < ROOM.maxX && p.z > ROOM.minZ && p.z < ROOM.maxZ) {
+          best = { type: 'floor', point: p, distance: t };
         }
       }
-    });
-
-    controller.addEventListener('triggerup', () => {
-      if (grabbedBy === controller) {
-        grabbedBy = null;
-        statusEl.textContent = `${figureData[currentFigure].name} colocada.`;
-      }
-    });
+    }
+ 
+    return best;
   }
-
-  controllers.forEach((controller, index) => {
-    setupController(controller, index === 0 ? 'left' : 'right');
-  });
-
-  // MOVIMIENTO CONTINUO Y COLISIONES
-  let previousTime = performance.now();
+ 
+  function teleportTo(point) {
+    camera.object3D.getWorldPosition(xrO);
+    const p = rig.object3D.position;
+    const nx = p.x + (point.x - xrO.x);
+    const nz = p.z + (point.z - xrO.z);
+ 
+    if (blockedAt(nx, nz)) {
+      statusEl.textContent = 'No puedes ir a ese lugar.';
+      return;
+    }
+ 
+    rig.setAttribute('position', { x: nx, y: p.y, z: nz });
+  }
+ 
+  function onSelectStart(st) {
+    const best = pickFor(st);
+    if (!best) return;
+ 
+    if (best.type === 'button') {
+      pressButton(best.btn);
+    } else if (best.type === 'figure') {
+      heldBy = st;
+      grabDistance = THREE.MathUtils.clamp(best.distance, .8, 5);
+      statusEl.textContent = 'Figura agarrada. Suelta para dejarla.';
+    } else {
+      teleportTo(best.point);
+    }
+  }
+ 
+  function onSelectEnd(st) {
+    if (heldBy === st) {
+      heldBy = null;
+      statusEl.textContent = `${figureData[currentFigure].name} colocada.`;
+    }
+  }
+ 
+  // CREAR MANDOS / MANOS
+  function setupXRController(i, xr) {
+    const c = xr.getController(i);
+    const grip = xr.getControllerGrip(i);
+    const hand = xr.getHand(i);
+ 
+    rig.object3D.add(c);
+    rig.object3D.add(grip);
+    rig.object3D.add(hand);
+ 
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -3)
+      ]),
+      new THREE.LineBasicMaterial({ color: 0x5cecff })
+    );
+    line.visible = false;
+    c.add(line);
+ 
+    const dot = new THREE.Mesh(
+      new THREE.SphereGeometry(.025, 12, 12),
+      new THREE.MeshBasicMaterial({ color: 0x5cecff })
+    );
+    dot.visible = false;
+    scene.object3D.add(dot);
+ 
+    grip.add(new THREE.Mesh(
+      new THREE.BoxGeometry(.045, .045, .13),
+      new THREE.MeshBasicMaterial({ color: 0x9ad9ff })
+    ));
+ 
+    const st = {
+      c, hand, line, dot,
+      connected: false, isHand: false,
+      handedness: i === 0 ? 'left' : 'right',
+      gamepad: null
+    };
+ 
+    c.addEventListener('connected', event => {
+      const d = event.data || {};
+      st.connected = true;
+      st.handedness = d.handedness || st.handedness;
+      st.gamepad = d.gamepad || null;
+      st.isHand = !!d.hand;
+ 
+      const color = st.handedness === 'left' ? 0x5cecff : 0xa78bfa;
+      line.material.color.setHex(color);
+      dot.material.color.setHex(color);
+      line.visible = true;
+ 
+      statusEl.textContent =
+        `${st.isHand ? 'Mano' : 'Mando'} ${st.handedness === 'left' ? 'izquierdo' : 'derecho'} detectado.`;
+    });
+ 
+    c.addEventListener('disconnected', () => {
+      st.connected = false;
+      st.gamepad = null;
+      line.visible = false;
+      dot.visible = false;
+      if (heldBy === st) heldBy = null;
+    });
+ 
+    c.addEventListener('selectstart', () => onSelectStart(st));
+    c.addEventListener('selectend', () => onSelectEnd(st));
+    c.addEventListener('squeezestart', () => cycleFigure(st.handedness === 'left' ? -1 : 1));
+ 
+    xrControllers.push(st);
+  }
+ 
+  function initXR() {
+    const xr = scene.renderer && scene.renderer.xr;
+    if (!xr) return;
+    setupXRController(0, xr);
+    setupXRController(1, xr);
+  }
+ 
+  if (scene.hasLoaded) initXR();
+  else scene.addEventListener('loaded', initXR, { once: true });
+ 
+  // Esferas en las articulaciones cuando se usan las manos
+  const jointGeo = new THREE.SphereGeometry(1, 8, 8);
+ 
+  function decorateHand(st) {
+    const joints = st.hand.joints || {};
+    for (const name in joints) {
+      const j = joints[name];
+      if (j.userData.dot) continue;
+      j.userData.dot = true;
+      const m = new THREE.Mesh(jointGeo,
+        new THREE.MeshBasicMaterial({ color: st.handedness === 'left' ? 0x5cecff : 0xa78bfa }));
+      m.scale.setScalar(j.jointRadius || .01);
+      j.add(m);
+    }
+  }
+ 
+  // ACTUALIZACION VR (se llama en cada cuadro, tambien dentro de las gafas)
+  function xrUpdate(dt) {
+    const mv = { x: 0, y: 0 };
+    const tr = { x: 0, y: 0 };
+ 
+    for (const st of xrControllers) {
+      if (!st.connected) continue;
+ 
+      if (st.isHand) decorateHand(st);
+ 
+      if (st.gamepad && st.gamepad.axes) {
+        const ax = st.gamepad.axes;
+        let x = ax.length >= 4 ? ax[2] : ax[0];
+        let y = ax.length >= 4 ? ax[3] : ax[1];
+        if (Math.abs(x) < .15) x = 0;
+        if (Math.abs(y) < .15) y = 0;
+ 
+        if (st.handedness === 'left') { mv.x = x; mv.y = y; }
+        else { tr.x = x; tr.y = y; }
+      }
+    }
+ 
+    // caminar con el joystick izquierdo
+    if (mv.x || mv.y) {
+      camera.object3D.getWorldDirection(forward);
+      forward.y = 0;
+      if (forward.lengthSq() > 0) forward.normalize();
+      right.set(-forward.z, 0, forward.x).normalize();
+ 
+      const fa = -mv.y;
+      movePlayer(
+        (right.x * mv.x + forward.x * fa) * 2.4 * dt,
+        (right.z * mv.x + forward.z * fa) * 2.4 * dt
+      );
+    }
+ 
+    // girar con el joystick derecho
+    if (tr.x) {
+      const r = rig.getAttribute('rotation');
+      rig.setAttribute('rotation', {
+        x: r.x,
+        y: r.y - tr.x * 1.8 * dt * 60,
+        z: r.z
+      });
+    }
+ 
+    // figura agarrada: seguir el rayo
+    if (heldBy && heldBy.connected) {
+      if (heldBy.handedness === 'right' && tr.y) {
+        grabDistance = THREE.MathUtils.clamp(grabDistance - tr.y * 1.6 * dt, .8, 5);
+      }
+      rayOf(heldBy);
+      placeFigure(xrO.clone().addScaledVector(xrD, grabDistance));
+    }
+ 
+    // rayos y puntos de mira
+    for (const st of xrControllers) {
+      if (!st.connected) continue;
+ 
+      const pick = pickFor(st);
+      let len = 3;
+ 
+      if (heldBy === st) len = grabDistance;
+      else if (pick) len = Math.min(pick.distance, 8);
+ 
+      const pos = st.line.geometry.attributes.position;
+      pos.setZ(1, -len);
+      pos.needsUpdate = true;
+      st.line.visible = true;
+ 
+      st.dot.position.copy(xrO).addScaledVector(xrD, len);
+      st.dot.visible = !!pick || heldBy === st;
+    }
+  }
+ 
+  // TECLADO (ESCRITORIO) Y BUCLE QUE SI FUNCIONA DENTRO DE VR
   const keys = new Set();
-
+ 
   window.addEventListener('keydown', event => {
     keys.add(event.key.toLowerCase());
   });
-
+ 
   window.addEventListener('keyup', event => {
     keys.delete(event.key.toLowerCase());
   });
-
+ 
   scene.addEventListener('enter-vr', () => {
+    vrPanels.setAttribute('visible', true);
     statusEl.textContent =
-      'VR activa: joystick izquierdo para caminar, derecho para girar y gatillo para agarrar.';
+      'VR activa: apunta y presiona el gatillo o pellizca. Joystick izquierdo camina, derecho gira.';
   });
-
+ 
   scene.addEventListener('exit-vr', () => {
-    grabbedBy = null;
-    moveStick.x = moveStick.y = 0;
-    turnStick.x = turnStick.y = 0;
+    vrPanels.setAttribute('visible', false);
+    heldBy = null;
+    xrControllers.forEach(st => { st.dot.visible = false; });
     statusEl.textContent = 'Modo normal: usa WASD para moverte.';
   });
-
-  function updateControls(now) {
-    const dt = Math.min((now - previousTime) / 1000, .05);
-    previousTime = now;
-
+ 
+  function updateControls(dt) {
     if (scene.is('vr-mode')) {
+      xrUpdate(dt);
+      return;
+    }
+ 
+    const f =
+      (keys.has('w') || keys.has('arrowup') ? 1 : 0) -
+      (keys.has('s') || keys.has('arrowdown') ? 1 : 0);
+ 
+    const sx =
+      (keys.has('d') ? 1 : 0) -
+      (keys.has('a') ? 1 : 0);
+ 
+    if (f || sx) {
       camera.object3D.getWorldDirection(forward);
       forward.y = 0;
-
       if (forward.lengthSq() > 0) forward.normalize();
-
       right.set(-forward.z, 0, forward.x).normalize();
-
-      const forwardAxis = -moveStick.y;
-      const xAxis = moveStick.x;
-
-      const dx =
-        (right.x * xAxis + forward.x * forwardAxis) * 2.4 * dt;
-      const dz =
-        (right.z * xAxis + forward.z * forwardAxis) * 2.4 * dt;
-
-      if (Math.abs(xAxis) > .05 || Math.abs(forwardAxis) > .05) {
-        movePlayer(dx, dz);
-      }
-
-      if (Math.abs(turnStick.x) > .12) {
-        const r = rig.getAttribute('rotation');
-        rig.setAttribute('rotation', {
-          x: r.x,
-          y: r.y - turnStick.x * 1.8 * dt * 60,
-          z: r.z
-        });
-      }
-
-      if (grabbedBy) moveHeldFigure(grabbedBy);
-    } else {
-      const f =
-        (keys.has('w') || keys.has('arrowup') ? 1 : 0) -
-        (keys.has('s') || keys.has('arrowdown') ? 1 : 0);
-
-      const s =
-        (keys.has('d') ? 1 : 0) -
-        (keys.has('a') ? 1 : 0);
-
-      if (f || s) {
-        camera.object3D.getWorldDirection(forward);
-        forward.y = 0;
-
-        if (forward.lengthSq() > 0) forward.normalize();
-
-        right.set(-forward.z, 0, forward.x).normalize();
-
-        movePlayer(
-          (right.x * s + forward.x * f) * 2.4 * dt,
-          (right.z * s + forward.z * f) * 2.4 * dt
-        );
-      }
-
-      const turn =
-        (keys.has('e') ? 1 : 0) -
-        (keys.has('q') ? 1 : 0);
-
-      if (turn) {
-        const r = rig.getAttribute('rotation');
-        rig.setAttribute('rotation', {
-          x: r.x,
-          y: r.y + turn * 1.4 * dt * 60,
-          z: r.z
-        });
-      }
+ 
+      movePlayer(
+        (right.x * sx + forward.x * f) * 2.4 * dt,
+        (right.z * sx + forward.z * f) * 2.4 * dt
+      );
     }
-
-    requestAnimationFrame(updateControls);
+ 
+    const turn =
+      (keys.has('e') ? 1 : 0) -
+      (keys.has('q') ? 1 : 0);
+ 
+    if (turn) {
+      const r = rig.getAttribute('rotation');
+      rig.setAttribute('rotation', {
+        x: r.x,
+        y: r.y + turn * 1.4 * dt * 60,
+        z: r.z
+      });
+    }
   }
-
-  function startControlLoop() {
-    previousTime = performance.now();
-    requestAnimationFrame(updateControls);
-  }
-
-  if (scene.hasLoaded) {
-    startControlLoop();
-  } else {
-    scene.addEventListener('loaded', startControlLoop, { once: true });
-  }
-
+ 
+  // requestAnimationFrame se detiene dentro de las gafas; el tick de A-Frame no
+  AFRAME.registerComponent('geolab-loop', {
+    tick(time, delta) {
+      updateControls(Math.min(delta / 1000, .05));
+    }
+  });
+  scene.setAttribute('geolab-loop', '');
+ 
+  // SELECCION CON RATON
+  scene.addEventListener('click', event => {
+    const button = findAncestor(event.target, 'vr-button');
+    if (button) pressButton(button);
+  });
+ 
   // INICIAR
   selectFigure('cube');
   renderCalcFields();
   showSection('start');
 </script>
-
+ 
 </body>
 </html>
